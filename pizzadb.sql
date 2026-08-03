@@ -1,0 +1,86 @@
+-- select * from pizza_sales
+-- 1.Total Revenue
+-- select sum(quantity * unit_price) as Total_Revenue
+-- from pizza_sales
+-- 2.average Order Value
+-- select sum(total_price) / count( distinct order_id) as average_Order_Value
+-- from pizza_sales
+-- 3.Total Pizzas Sold
+-- SELECT SUM(quantity) AS Total_pizza_sold FROM pizza_sales
+-- 4.Total Orders
+-- select distinct count(order_id) from pizza_sales
+-- 5.Average Pizzas Per Order
+-- select  cast(sum(quantity) as decimal(10,2)) / cast(count(distinct order_id) as decimal(10,2)) as Avg_Pizzas_per_order
+-- from pizza_sales
+-- B. Daily Trend for Total Orders
+-- SELECT weekday_name, total_orders
+-- FROM (
+--     SELECT 
+--         DAYNAME(STR_TO_DATE(order_date, '%d-%m-%Y')) AS weekday_name,
+--         DAYOFWEEK(STR_TO_DATE(order_date, '%d-%m-%Y')) AS weekday_num,
+--         COUNT(DISTINCT order_id) AS total_orders
+--     FROM pizza_sales
+--     GROUP BY weekday_name, weekday_num
+-- ) AS t
+-- ORDER BY weekday_num;
+-- C. Monthly Trend for Orders
+-- select month_name,total_orders
+-- from (select monthname(STR_TO_DATE(order_date, '%m-%d-%Y')) as month_name,
+-- month(STR_TO_DATE(order_date, '%m-%d-%Y')) as month_num,
+-- count(distinct order_id) as total_orders
+-- from pizza_sales
+-- group by month_name,month_num) as T
+-- order by month_num
+-- D. % of Sales by Pizza Category
+-- select pizza_category, cast(sum(total_price)as decimal (10,2)) as revenue,
+-- cast(sum(total_price) * 100 / (select sum(total_price) from pizza_sales) as decimal (10,2))
+-- as percentage_of_Sales_by
+-- from pizza_sales
+-- group by pizza_category
+-- E. % of Sales by Pizza Size
+-- select pizza_size, cast(sum(total_price)as decimal (10,2)) as revenue,
+-- cast(sum(total_price) * 100 / (select sum(total_price) from pizza_sales) as decimal (10,2))
+-- as percentage_of_Sales_by
+-- from pizza_sales
+-- group by pizza_size
+-- order by pizza_size
+-- F.Total Pizzas Sold by Pizza Category
+-- SELECT pizza_category, sum(quantity) as Total_Pizzas_Sold
+-- FROM pizza_sales
+-- group by pizza_category
+-- G. Top 5 Pizzas by Revenue
+-- select pizza_name, cast(sum(total_price)as decimal(10,2)) as Revenue
+-- from pizza_sales
+-- group by pizza_name
+-- order by Revenue desc
+-- limit 5
+-- H. Bottom 5 Pizzas by Revenue
+-- select pizza_name, cast(sum(total_price) as decimal(10,2)) as Revenue
+-- from pizza_sales
+-- group by pizza_name
+-- order by Revenue asc
+-- limit 5
+-- I. Top 5 Pizzas by Quantity
+-- SELECT pizza_name, sum(quantity) as Total_Pizzas_Sold
+-- FROM pizza_sales
+-- group by pizza_name
+-- order by Total_Pizzas_Sold desc
+-- limit 5
+-- J. Bottom 5 Pizzas by Quantity
+-- SELECT pizza_name, sum(quantity) as Total_Pizzas_Sold
+-- FROM pizza_sales
+-- group by pizza_name
+-- order by Total_Pizzas_Sold asc
+-- limit 5
+-- K. Top 5 Pizzas by Total Orders
+-- SELECT pizza_name, count( distinct order_id) as Total_Pizzas_Sold
+-- FROM pizza_sales
+-- group by pizza_name
+-- order by Total_Pizzas_Sold desc
+-- limit 5
+-- L. Borrom 5 Pizzas by Total Orders
+-- SELECT pizza_name, count( distinct order_id) as Total_Pizzas_Sold
+-- FROM pizza_sales
+-- group by pizza_name
+-- order by Total_Pizzas_Sold asc
+-- limit 5
